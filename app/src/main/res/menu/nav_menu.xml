@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_call"
+            android:icon="@drawable/ic_phonecall"
+            android:title="一键紧急呼叫"/>
+
+        <item
+            android:id="@+id/nav_wendu"
+            android:icon="@drawable/ic_wendu"
+            android:title="室内环境"/>
+
+        <item
+            android:id="@+id/nav_image"
+            android:icon="@drawable/ic_image"
+            android:title="图片"/>
+
+        <item
+            android:id="@+id/nav_care"
+            android:icon="@drawable/ic_care"
+            android:title="监控"/>
+
+        <item
+            android:id="@+id/nav_qiwen"
+            android:icon="@drawable/ic_qiwen"
+            android:title="天气"/>
+
+
+        <item
+            android:id="@+id/nav_region"
+            android:icon="@drawable/ic_region"
+            android:title="位置"/>
+
+        <item
+            android:id="@+id/nav_zhuxiao"
+            android:icon="@drawable/ic_zhuxiao"
+            android:title="注销"/>
+
+    </group>
+
+</menu>
