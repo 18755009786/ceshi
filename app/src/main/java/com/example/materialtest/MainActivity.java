@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 //                mDrawerLayout.closeDrawers();   // 将滑动菜单关闭
                 switch (menuItem.getItemId()){
-                    case R.id.nav_call:
+                    case R.id.nav_call:  // 一键紧急呼叫
                         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!=
                                 PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission.CALL_PHONE},1);
@@ -61,13 +61,18 @@ public class MainActivity extends AppCompatActivity {
                             call();
                         }
                         break;
-                    case R.id.nav_region:
+                    case R.id.nav_region:  // 定位
                         Intent intent = new Intent(MainActivity.this, LBSActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.nav_image:
+                    case R.id.nav_image:  // 查看图片
                         Intent intentImage = new Intent(MainActivity.this, ShowImageActivity.class);
                         startActivity(intentImage);
+                        break;
+                    case R.id.nav_qiwen:  // 天气
+                        Intent intent_weather = new Intent(MainActivity.this, FragmentActivity.class);
+                        startActivity(intent_weather);
+                        break;
                     default:
                         break;
                 }

@@ -2,7 +2,7 @@ package com.example.materialtest.db;
 
 import org.litepal.crud.DataSupport;
 
-public class province extends DataSupport {
+public class Province extends DataSupport {
     private int id;
 
     private String provinceName;
@@ -33,3 +33,4 @@ public class province extends DataSupport {
         this.provinceCode = provinceCode;
     }
 }
+
