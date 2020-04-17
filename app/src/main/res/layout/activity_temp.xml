@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentTop="true" />
+
+
+        <TextView
+            android:id="@+id/temp_t"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_below="@id/line_chart"
+            android:layout_centerInParent="true"
+            android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/temp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temp_t"
+            android:layout_centerInParent="true"
+            android:text="温度： 23 ℃"
+            android:textSize="30sp"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/temp_t_2"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_below="@id/temp_text"
+            android:layout_centerInParent="true"
+            android:textColor="#000000"/>
+
+        <Button
+            android:id="@+id/temp_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/temp_t_2"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="200dp"
+            android:textColor="#FFF"
+            android:background="#F79709"
+            android:text="测试按钮"
+            android:layout_margin="8dp"
+         />
+
+        <TextView
+            android:id="@+id/temp_text_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temp_button"
+            android:layout_centerInParent="true"
+            android:text="测试温度异常时，状态栏的通知提醒"
+            android:textColor="#808080"/>
+
+    </RelativeLayout>
+</LinearLayout>
+

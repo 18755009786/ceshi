@@ -69,6 +69,9 @@ public class WeatherDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_data);
+
+        ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
+
         //初始化各控件
         bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
 
@@ -129,7 +132,8 @@ public class WeatherDataActivity extends AppCompatActivity {
      * 根据天气id请求城市天气信息
      */
     public void requestWeather(final String weatherId){
-        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=4e9cf1d4785040ed904e287e596e8e84";
+        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
+//        String weatherUrl = "http://guolin.tech/api/weather?cityid=CN101010100&key=28c01281607a4a9b92195626fb49a4a1";
         HttpUtill.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -234,4 +238,9 @@ public class WeatherDataActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

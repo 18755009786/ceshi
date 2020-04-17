@@ -13,6 +13,7 @@ public class FragmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
+        ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
 
         // 从SharedPreferences文件中读取缓存数据，如果不为null说明之前已经请求过天气数据了，
         // 那么就没有必要让用户再次选择城市，而是直接跳转WeatherDataActivity。
@@ -22,5 +23,11 @@ public class FragmentActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

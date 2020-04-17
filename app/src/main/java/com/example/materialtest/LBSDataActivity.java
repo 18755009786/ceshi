@@ -1,19 +1,16 @@
 package com.example.materialtest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -30,17 +27,12 @@ import com.baidu.mapapi.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LBSActivity extends AppCompatActivity {
-
-    private MapView mapView;
+public class LBSDataActivity extends AppCompatActivity {
 
     public LocationClient mLocationClient;
 
     private TextView positionText;
 
-    private BaiduMap baiduMap;
-
-    private boolean isFirstLocate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,38 +40,29 @@ public class LBSActivity extends AppCompatActivity {
 
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
-        SDKInitializer.initialize(getApplicationContext());
 
-        setContentView(R.layout.activity_lbs);
+        setContentView(R.layout.activity_lbsdata);
 
         ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_lbs);
-        setSupportActionBar(toolbar);
-
-        mapView = (MapView) findViewById(R.id.bmapView);
-
-        baiduMap = mapView.getMap();
-
-        baiduMap.setMyLocationEnabled(true);
 
         positionText = (TextView) findViewById(R.id.position_text_view);
         List<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(LBSActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(LBSDataActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (ContextCompat.checkSelfPermission(LBSActivity.this, Manifest.permission.READ_PHONE_STATE)
+        if (ContextCompat.checkSelfPermission(LBSDataActivity.this, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
         }
-        if (ContextCompat.checkSelfPermission(LBSActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(LBSDataActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
         if (!permissionList.isEmpty()){
             String [] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(LBSActivity.this, permissions, 1);
+            ActivityCompat.requestPermissions(LBSDataActivity.this, permissions, 1);
         } else {
             requestLocation();
         }
@@ -92,7 +75,7 @@ public class LBSActivity extends AppCompatActivity {
 
     private void initLocation(){
         LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(5000);  // 每5秒 更新一下当前位置
+        option.setScanSpan(500000);  // 每5秒 更新一下当前位置
         option.setIsNeedAddress(true);  // 获取当前位置详细地址信息
         mLocationClient.setLocOption(option);
     }
@@ -100,24 +83,20 @@ public class LBSActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mLocationClient.stop();  // 停止定位
-        mapView.onDestroy();
-
-        baiduMap.setMyLocationEnabled(false);
 
         ActivityCollector.removeActivity(this);
+
     }
 
     @Override
@@ -142,23 +121,8 @@ public class LBSActivity extends AppCompatActivity {
         }
     }
 
-    private void navigateTo(BDLocation location){
-        if (isFirstLocate){
-            LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
-            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
-            baiduMap.animateMapStatus(update);
-            update = MapStatusUpdateFactory.zoomTo(16f); // 缩放级别 3到19之间 其中小数点位的值也是可以的
-            baiduMap.animateMapStatus(update);
-            isFirstLocate = false;
-        }
-        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
-        locationBuilder.latitude(location.getLatitude());
-        locationBuilder.longitude(location.getLongitude());
-        MyLocationData locationData = locationBuilder.build();
-        baiduMap.setMyLocationData(locationData);
-    }
 
-    public class MyLocationListener implements BDLocationListener{
+    public class MyLocationListener implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(final BDLocation bdLocation) {
@@ -193,36 +157,10 @@ public class LBSActivity extends AppCompatActivity {
                     positionText.setText(currentPosition);
                 }
             });
-
-            if (bdLocation.getLocType() == BDLocation.TypeGpsLocation || bdLocation.getLocType() == BDLocation.TypeNetWorkLocation){
-                navigateTo(bdLocation);
-            }
         }
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_lbs, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.back_lbs:
-                Intent intent = new Intent(LBSActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.chakan:
-                finish();
-                Intent intent1 = new Intent(LBSActivity.this, LBSDataActivity.class);
-                startActivity(intent1);
 
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
 }

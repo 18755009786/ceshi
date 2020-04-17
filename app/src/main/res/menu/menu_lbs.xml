@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/back_lbs"
+        android:icon="@drawable/ic_back"
+        android:title="返回"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/chakan"
+        android:icon="@drawable/ic_chakan"
+        android:title="查看详细位置数据"
+        app:showAsAction="never"
+        />
+
+
+</menu>

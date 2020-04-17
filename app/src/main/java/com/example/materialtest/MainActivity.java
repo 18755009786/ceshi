@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,6 +75,20 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent_weather = new Intent(MainActivity.this, FragmentActivity.class);
                         startActivity(intent_weather);
                         break;
+                    case R.id.nav_care:  // 控制+视频
+                        Intent intent_care = new Intent(MainActivity.this,ControlActivity.class);
+                        startActivity(intent_care);
+                        break;
+                    case R.id.nav_wendu:  // 温度
+                        Intent intent_temp = new Intent(MainActivity.this, TempActivity.class);
+                        startActivity(intent_temp);
+                        break;
+                    case R.id.nav_zhuxiao:  // 注销
+                        Intent intent_zhuxiao = new Intent(MainActivity.this, LoginActivity.class);
+//                        LoginActivity loginActivity = new LoginActivity();
+//                        loginActivity.cancel();
+                        startActivity(intent_zhuxiao);
+
                     default:
                         break;
                 }
@@ -133,4 +149,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

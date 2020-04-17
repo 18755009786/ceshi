@@ -41,6 +41,8 @@ public class ShowImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
 
+        ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
+
         initPicture();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
@@ -88,5 +90,12 @@ public class ShowImageActivity extends AppCompatActivity {
             int index = random.nextInt(pictures.length);
             pictureList.add(pictures[index]);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        ActivityCollector.removeActivity(this);
     }
 }
