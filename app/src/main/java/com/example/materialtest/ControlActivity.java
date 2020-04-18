@@ -3,8 +3,11 @@ package com.example.materialtest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class ControlActivity extends AppCompatActivity {
 
@@ -20,6 +23,14 @@ public class ControlActivity extends AppCompatActivity {
         setBuiltInZoomControls(true);//设置内置的缩放控件。
 
         ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
+
+        Button paizhao = (Button)findViewById(R.id.back2);
+        paizhao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ControlActivity.this, "你点击了拍照按钮", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setBuiltInZoomControls(boolean b) {

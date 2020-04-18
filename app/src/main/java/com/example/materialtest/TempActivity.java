@@ -1,10 +1,19 @@
 package com.example.materialtest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +45,8 @@ public class TempActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
 
+        Button Ceshi = (Button) findViewById(R.id.temp_button);
+
         ActivityCollector.addActivity(this); // 将正在创建的活动添加到活动管理器中
 
         lineChart = (LineChartView) findViewById(R.id.line_chart);
@@ -43,6 +54,38 @@ public class TempActivity extends AppCompatActivity {
         getAxisXLables();//获取x轴的标注
         getAxisPoints();//获取坐标点
         initLineChart();//初始化
+
+
+
+        Ceshi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TempActivity.this, MainActivity.class);
+                PendingIntent pi = PendingIntent.getActivity(TempActivity.this, 0, intent, 0);
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){  //Android O （8.0）以上版本需要渠道
+
+                    NotificationChannel notificationChannel = new NotificationChannel("channelid1","channelname",NotificationManager.IMPORTANCE_HIGH);//通知重要度，DEFAULT及以上，通知时手机默认会有振动
+                    manager.createNotificationChannel(notificationChannel);
+                }
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(TempActivity.this,"channelid1");
+                builder.setContentTitle("家庭安全卫士");
+//                builder.setContentText("警告！！！当前检测出室内温度异常，可能存在火灾等安全隐患，建议点击实时查看。");
+                builder.setStyle(new NotificationCompat.BigTextStyle().bigText("警告！！！当前检测出室内温度异常，可能存在火灾等安全隐患，建议点击实时查看。"));
+//                builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(getResources(), R.mipmap.huozaijinggao)));
+                builder.setWhen(System.currentTimeMillis());
+                builder.setSmallIcon(R.mipmap.huozaijinggao);
+                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.huozaijinggao));
+                builder.setContentIntent(pi);
+                builder.setAutoCancel(true);
+                builder.setPriority(NotificationCompat.PRIORITY_MAX); // 通知的重要程度
+//                builder.setPriority(NotificationCompat.PRIORITY_HIGH); // 通知的重要程度
+                builder.setDefaults(NotificationCompat.DEFAULT_ALL); // 使用手机默认的通知效果
+                manager.notify(1,builder.build());
+            }
+        });
 
     }
 

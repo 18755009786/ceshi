@@ -7,6 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +24,20 @@ public class ShowImageActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefresh;
 
-    private Picture[] pictures = {new Picture("图片1", R.drawable.picture_1),
-            new Picture("图片2",R.drawable.picture_2),
-            new Picture("图片3",R.drawable.picture_3),
-            new Picture("图片4",R.drawable.picture_4),
-            new Picture("图片5",R.drawable.picture_5),
-            new Picture("图片6",R.drawable.picture_6),
-            new Picture("图片7",R.drawable.picture_7),
-            new Picture("图片8",R.drawable.picture_8),
-            new Picture("图片9",R.drawable.picture_9),
-            new Picture("图片10",R.drawable.picture_10),
-            new Picture("图片11",R.drawable.picture_11),
-            new Picture("图片12",R.drawable.picture_12)
+    private Picture[] pictures = {new Picture("图片1", R.drawable.picture_1_b),
+            new Picture("图片2",R.drawable.picture_2_b),
+            new Picture("图片3",R.drawable.picture_3_b),
+            new Picture("图片4",R.drawable.picture_4_b),
+            new Picture("图片5",R.drawable.picture_5_b),
+            new Picture("图片6",R.drawable.picture_6_b),
+            new Picture("图片7",R.drawable.picture_7_b),
+            new Picture("图片8",R.drawable.picture_8_b),
+            new Picture("图片9",R.drawable.picture_9_b),
+            new Picture("图片10",R.drawable.picture_10_b),
+            new Picture("图片11",R.drawable.picture_11_b),
+            new Picture("图片12",R.drawable.picture_12_b),
+            new Picture("图片12",R.drawable.picture_13_b),
+            new Picture("图片12",R.drawable.picture_14_b)
     };
 
     private List<Picture> pictureList = new ArrayList<>();
@@ -60,6 +68,14 @@ public class ShowImageActivity extends AppCompatActivity {
                 refreshFruits();  // 本地刷新
             }
         });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShowImageActivity.this, "下拉可对图库进行刷新", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void refreshFruits(){
@@ -85,7 +101,12 @@ public class ShowImageActivity extends AppCompatActivity {
 
     private void initPicture(){
         pictureList.clear();
-        for(int i = 0; i < 50 ; i++){
+//        for(int i = 0; i < 50 ; i++){
+//            Random random = new Random();
+//            int index = random.nextInt(pictures.length);
+//            pictureList.add(pictures[index]);
+//        }
+        for(int i = 0; i < 25 ; i++){
             Random random = new Random();
             int index = random.nextInt(pictures.length);
             pictureList.add(pictures[index]);
@@ -97,5 +118,20 @@ public class ShowImageActivity extends AppCompatActivity {
         super.onDestroy();
 
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_image, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.back_image:
+                finish();
+        }
+        return true;
     }
 }

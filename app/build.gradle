@@ -41,6 +41,8 @@ dependencies {
 
 //    implementation 'com.diogobernardino:williamchart:3.3.0'
     implementation 'com.github.lecho:hellocharts-library:1.5.8'
+    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.zxy.android:recovery:0.0.8'
 
 
 }

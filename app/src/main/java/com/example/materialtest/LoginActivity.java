@@ -99,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.login_btn_back:
                     AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                     dialog.setTitle("重要提示");
+                    dialog.setIcon(R.drawable.xunwen);
                     dialog.setMessage("请再次确认，您是否要确认退出程序 ？");
                     dialog.setCancelable(false); // 不可用back键关闭
                     dialog.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
@@ -202,5 +203,21 @@ public class LoginActivity extends AppCompatActivity {
     public void resetpwd(View view) {
     }
     public void login(View view) {
+    }
+
+    @Override
+    public void onBackPressed() {
+        new android.app.AlertDialog.Builder(this)
+                .setIcon(R.drawable.xunwen)
+                .setTitle("确认退出吗？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+                        ActivityCollector.finishAll();
+                    }
+                })
+                .setNegativeButton("取消",null)
+                .show();
     }
 }
